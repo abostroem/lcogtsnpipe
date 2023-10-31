@@ -8,7 +8,7 @@ ENV IRAFARCH linux64
 
 RUN apt-get update \
         && apt -y install gcc make flex git gfortran \
-        && apt -y install libcurl4-openssl-dev libexpat-dev libreadline-dev gettext \
+        && apt -y install libcurl4-openssl-dev libexpat-dev libreadline-dev gettext zlib1g-dev bison \
         && apt-get autoclean \
         && rm -rf /var/lib/apt/lists/*
 
@@ -16,10 +16,8 @@ RUN mkdir -p $iraf \
         && cd /iraf \
         && git clone https://github.com/iraf-community/iraf.git \
         && cd $iraf \
-        && git checkout ba22d13 \
-        && ./install < /dev/null \
-        && make $IRAFARCH \
-        && make sysgen
+        && git checkout 5c0a2a7 \
+        && make
 
 RUN apt-get update \
         && apt-get -y install libx11-dev libcfitsio-bin wget x11-apps libtk8.6 sextractor procps g++ \
